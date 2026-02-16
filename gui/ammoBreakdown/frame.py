@@ -30,10 +30,11 @@ from service.fit import Fit
 _t = wx.GetTranslation
 
 COL_AMMO_NAME = 0
-COL_OPTIMAL = 1
-COL_FALLOFF = 2
-COL_ALPHA = 3
-COL_DPS = 4
+COL_DAMAGE_TYPE = 1
+COL_OPTIMAL = 2
+COL_FALLOFF = 3
+COL_ALPHA = 4
+COL_DPS = 5
 
 
 class AmmoBreakdownFrame(AuxiliaryFrame):
@@ -50,6 +51,7 @@ class AmmoBreakdownFrame(AuxiliaryFrame):
             style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.BORDER_SUNKEN
         )
         self.listCtrl.AppendColumn(_t('Ammo Name'), wx.LIST_FORMAT_LEFT, 180)
+        self.listCtrl.AppendColumn(_t('Damage Type'), wx.LIST_FORMAT_LEFT, 110)
         self.listCtrl.AppendColumn(_t('Optimal'), wx.LIST_FORMAT_LEFT, 120)
         self.listCtrl.AppendColumn(_t('Falloff'), wx.LIST_FORMAT_LEFT, 120)
         self.listCtrl.AppendColumn(_t('Alpha'), wx.LIST_FORMAT_RIGHT, 90)
@@ -96,6 +98,7 @@ class AmmoBreakdownFrame(AuxiliaryFrame):
             self.listCtrl.Show()
             for row in self._data:
                 idx = self.listCtrl.InsertItem(self.listCtrl.GetItemCount(), row['ammoName'])
+                self.listCtrl.SetItem(idx, COL_DAMAGE_TYPE, row['damageType'])
                 self.listCtrl.SetItem(idx, COL_OPTIMAL, row['optimal'])
                 self.listCtrl.SetItem(idx, COL_FALLOFF, row['falloff'])
                 self.listCtrl.SetItem(idx, COL_ALPHA, '{:.1f}'.format(row['alpha']))
@@ -114,10 +117,11 @@ class AmmoBreakdownFrame(AuxiliaryFrame):
 
     def _get_csv_content(self):
         lines = []
-        lines.append([_t('Ammo Name'), _t('Optimal'), _t('Falloff'), _t('Alpha'), _t('DPS')])
+        lines.append([_t('Ammo Name'), _t('Damage Type'), _t('Optimal'), _t('Falloff'), _t('Alpha'), _t('DPS')])
         for row in self._data:
             lines.append([
                 row['ammoName'],
+                row['damageType'],
                 row['optimal'],
                 row['falloff'],
                 '{:.1f}'.format(row['alpha']),

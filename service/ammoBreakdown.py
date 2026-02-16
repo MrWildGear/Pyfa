@@ -23,6 +23,27 @@ from eos.utils.stats import DmgTypes
 from service.fit import Fit
 
 
+def _damage_type_string(volley):
+    """
+    Return primary damage type, or "Primary / Secondary" if secondary > 0.
+    Returns "—" if all four damage types are 0.
+    """
+    ordered = [
+        (volley.em, 'EM'),
+        (volley.thermal, 'Thermal'),
+        (volley.kinetic, 'Kinetic'),
+        (volley.explosive, 'Explosive'),
+    ]
+    ordered.sort(key=lambda x: x[0], reverse=True)
+    primary = ordered[0]
+    if primary[0] <= 0:
+        return "—"
+    secondary = ordered[1]
+    if secondary[0] <= 0:
+        return primary[1]
+    return "{} / {}".format(primary[1], secondary[1])
+
+
 def get_ammo_in_cargo_usable_by_weapons(fit):
     """
     Return set of charge items that are in fit.cargo and can be used by at least
@@ -53,7 +74,7 @@ def get_ammo_breakdown(fit):
     aggregated DPS, Alpha (volley), Optimal, and Falloff assuming all such
     weapons are loaded with that ammo.
 
-    Returns a list of dicts with keys: ammoName, optimal, falloff, alpha, dps.
+    Returns a list of dicts with keys: ammoName, damageType, optimal, falloff, alpha, dps.
     optimal/falloff may be strings (e.g. "12.5 – 18.2 km") or "—" for N/A.
     alpha and dps are floats (total).
     """
@@ -130,6 +151,7 @@ def get_ammo_breakdown(fit):
 
         result.append({
             'ammoName': charge.name,
+            'damageType': _damage_type_string(total_volley),
             'optimal': optimal_str,
             'falloff': falloff_str,
             'alpha': alpha,
