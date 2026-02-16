@@ -1015,9 +1015,12 @@ class Fit:
         # We run the command calculations first so that they can calculate fully and store the command effects on the
         # target fit to be used later on in the calculation. This does not apply when we're already calculating a
         # command fit.
-        if type != CalcType.COMMAND and self.commandFits and not self.__calculated:
+        if type != CalcType.COMMAND and self.commandFits:
             for fit in self.commandFits:
                 commandInfo = fit.getCommandInfo(self.ID)
+                if commandInfo is None:
+                    pyfalog.debug("Command fit {} has no command info for boosted fit {}; skipping", fit, self.ID)
+                    continue
                 # Continue loop if we're trying to apply ourselves or if this fit isn't active
                 if not commandInfo.active or self == commandInfo.booster_fit:
                     continue
