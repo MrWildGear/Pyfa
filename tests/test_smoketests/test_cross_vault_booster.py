@@ -23,6 +23,7 @@ def _make_booster_fit(DB, Gamedata, Saveddata):
     ship = Saveddata["Ship"](ship_item)
     fit = Saveddata["Fit"](ship, "Booster Stork")
     fit.booster = True
+    fit.implantLocation = 0  # FIT; required for fits table NOT NULL
     mod = Saveddata["Module"](burst_item)
     mod.state = Saveddata["State"].ONLINE
     fit.modules.append(mod)
@@ -42,6 +43,7 @@ def test_cross_vault_booster_combat_ship_gets_boost_calculated(DB, Gamedata, Sav
         pytest.skip("Gamedata missing Stork or Shield Command Burst I")
 
     combat_fit = RifterFit
+    combat_fit.implantLocation = 0  # FIT; required for fits table NOT NULL
 
     # Save both fits so they get IDs
     eos_db.save(booster_fit)
