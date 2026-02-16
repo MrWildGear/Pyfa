@@ -20,12 +20,17 @@ def _make_booster_fit(DB, Gamedata, Saveddata):
     burst_item = DB["db"].getItem("Shield Command Burst I")
     if burst_item is None:
         return None
+    # Command burst must have a charge loaded to apply any bonus (warfareBuffID comes from charge)
+    charge_item = DB["db"].getItem("Shield Harmonizing Charge I")
+    if charge_item is None:
+        return None
     ship = Saveddata["Ship"](ship_item)
     fit = Saveddata["Fit"](ship, "Booster Stork")
     fit.booster = True
     fit.implantLocation = 0  # FIT; required for fits table NOT NULL
     mod = Saveddata["Module"](burst_item)
     mod.state = Saveddata["State"].ONLINE
+    mod.charge = charge_item
     fit.modules.append(mod)
     return fit
 
@@ -40,7 +45,7 @@ def test_cross_vault_booster_combat_ship_gets_boost_calculated(DB, Gamedata, Sav
     # Create booster fit (may be None if gamedata lacks Stork / Shield Command Burst I)
     booster_fit = _make_booster_fit(DB, Gamedata, Saveddata)
     if booster_fit is None:
-        pytest.skip("Gamedata missing Stork or Shield Command Burst I")
+        pytest.skip("Gamedata missing Stork, Shield Command Burst I, or Shield Harmonizing Charge I")
 
     combat_fit = RifterFit
     combat_fit.implantLocation = 0  # FIT; required for fits table NOT NULL
@@ -71,7 +76,9 @@ def test_cross_vault_booster_combat_ship_gets_boost_calculated(DB, Gamedata, Sav
         eos_db.saveddata_session.flush()
         eos_db.saveddata_session.refresh(booster_fit)
 
-        # Recalc combat fit so command effects are applied
+        # Booster must be calculated so its modules (and charge attributes) are ready
+        booster_fit.calculateModifiedAttributes()
+        # Recalc combat fit so command effects are applied from booster to combat
         combat_fit.clear()
         combat_fit.calculateModifiedAttributes()
 
