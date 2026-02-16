@@ -20,6 +20,7 @@
 import eos.config
 from eos.utils.spoolSupport import SpoolOptions, SpoolType
 from eos.utils.stats import DmgTypes
+from service.fit import Fit
 
 
 def get_ammo_in_cargo_usable_by_weapons(fit):
@@ -89,6 +90,8 @@ def get_ammo_breakdown(fit):
         try:
             for m in mods:
                 m.charge = charge
+            fit.calculated = False
+            fit.calculateModifiedAttributes()
             total_dps = DmgTypes.default()
             total_volley = DmgTypes.default()
             optimals = []
@@ -134,4 +137,6 @@ def get_ammo_breakdown(fit):
         })
     # Sort by ammo name
     result.sort(key=lambda r: r['ammoName'])
+    if result:
+        Fit.getInstance().recalc(fit)
     return result
