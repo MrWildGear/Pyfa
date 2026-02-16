@@ -58,7 +58,7 @@ def get_ammo_breakdown(fit):
     """
     if fit is None:
         return []
-    default_spool = eos.config.settings.get('globalDefaultSpoolupPercentage', 1.0)
+    default_spool = eos.config.settings['globalDefaultSpoolupPercentage'] or 1.0
     spool_opts = SpoolOptions(SpoolType.SPOOL_SCALE, default_spool, False)
 
     ammo_items = get_ammo_in_cargo_usable_by_weapons(fit)
