@@ -39,6 +39,7 @@ from eos.config import gamedata_date, gamedata_version
 from eos.modifiedAttributeDict import ModifiedAttributeDict
 from graphs import GraphFrame
 from gui.ammoBreakdown import AmmoBreakdownFrame
+from gui.speedBreakdown import SpeedBreakdownFrame
 from gui.additionsPane import AdditionsPane
 from gui.bitmap_loader import BitmapLoader
 from gui.builtinMarketBrowser.events import ItemSelected
@@ -438,6 +439,9 @@ class MainFrame(wx.Frame):
     def OnShowAmmoBreakdownFrame(self, event):
         AmmoBreakdownFrame.openOne(self)
 
+    def OnShowSpeedBreakdownFrame(self, event):
+        SpeedBreakdownFrame.openOne(self)
+
     def OnShowGraphFrameHidden(self, event):
         GraphFrame.openOne(self, includeHidden=True)
 
@@ -571,6 +575,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnShowGraphFrame, id=menuBar.graphFrameId)
         self.Bind(wx.EVT_MENU, self.OnShowGraphFrameHidden, id=self.hiddenGraphsId)
         self.Bind(wx.EVT_MENU, self.OnShowAmmoBreakdownFrame, id=menuBar.ammoBreakdownFrameId)
+        self.Bind(wx.EVT_MENU, self.OnShowSpeedBreakdownFrame, id=menuBar.speedBreakdownFrameId)
 
         toggleSearchBoxId = wx.NewId()
         toggleShipMarketId = wx.NewId()

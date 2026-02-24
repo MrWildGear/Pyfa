@@ -1804,6 +1804,90 @@ msgstr ""
 msgid "Export ammo breakdown"
 msgstr ""
 
+#: gui/speedBreakdown/frame.py
+msgid "Speed Breakdown"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Fitted ship"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Fitted prop:"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "No boost"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "With boost"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Base speed (m/s)"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "AB speed (m/s)"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "MWD speed (m/s)"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Lock range (km)"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Propulsion in cargo"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Item"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Speed (no boost)"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Speed (with boost)"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Lock (no boost) km"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Lock (with boost) km"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "No fit loaded."
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Export…"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Copy to clipboard"
+msgstr ""
+
+#: gui/speedBreakdown/frame.py
+msgid "Export speed breakdown"
+msgstr ""
+
+#: gui/mainMenuBar.py
+msgid "Speed Break&down"
+msgstr ""
+
+#: gui/mainMenuBar.py
+msgid "Speed and lock range with/without prop and fleet boosts"
+msgstr ""
+
 #: gui/builtinPreferenceViews/pyfaGeneralPreferences.py:160
 msgid "Extra info in Additions panel tab names"
 msgstr ""
